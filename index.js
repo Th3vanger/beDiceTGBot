@@ -8,7 +8,7 @@ bot.command('start', ctx => {
     console.log(ctx.from)
     ctx.reply('hello there! Welcome to my new telegram bot. ' + ctx.chat.id)
 })
-
+bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 
 //method to start get the script to pulling updates for telegram 
 
