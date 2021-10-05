@@ -6,8 +6,7 @@ const bot = new Composer()
  
 bot.command('start', ctx => {
     console.log(ctx.from)
-    bot.telegram.sendMessage(ctx.chat.id, 'hello there! Welcome to my new telegram bot. ' + ctx.chat.id, {
-    })
+    ctx.reply('hello there! Welcome to my new telegram bot. ' + ctx.chat.id)
 })
 
 
