@@ -1,0 +1,23 @@
+{
+  "name": "bedicetgbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "micro-bot",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Th3vanger/beDiceTGBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Th3vanger/beDiceTGBot/issues"
+  },
+  "homepage": "https://github.com/Th3vanger/beDiceTGBot#readme",
+  "dependencies": {
+    "micro-bot": "^2.5.3"
+  }
+}
