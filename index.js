@@ -5,8 +5,8 @@ const bot = new Composer()
 //method for invoking start command
  
 bot.command('start', ctx => {
-//     console.log(ctx.from)
-//     ctx.reply('start vez');
+     console.log(ctx.from)
+     ctx.reply('start vez');
 //     const https = require('https');
 
 //     https.get('https://cf-dice.herokuapp.com/dice/airc/roll', (resp) => {
