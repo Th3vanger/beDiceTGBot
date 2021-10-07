@@ -6,7 +6,7 @@ const bot = new Composer()
  
 bot.command('start', ctx => {
     console.log(ctx.from)
-    
+    ctx.reply('cos vez');
     const https = require('https');
 
     https.get('https://cf-dice.herokuapp.com/dice/airc/roll', (resp) => {
