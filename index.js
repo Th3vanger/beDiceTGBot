@@ -4,72 +4,40 @@ const bot = new Composer()
 const site = "https://cf-dice.herokuapp.com/"
 const https = require('https');
 //method for invoking start command
- 
-bot.command('start', ctx => {
-     console.log(ctx.from)
-   
-     
-     ctx.reply('start vez');
-//     const https = require('https');
-
-//     https.get('https://cf-dice.herokuapp.com/dice/airc/roll', (resp) => {
-//     let data = '';
-
-//     // A chunk of data has been received.
-//     resp.on('data', (chunk) => {
-//         data += chunk;
-//     });
-
-//     // The whole response has been received. Print out the result.
-//     resp.on('end', () => {
-//         console.log(JSON.parse(data).explanation);
-//         console.log(data);
-//         ctx.replyWithPhoto({ url: 'https://cf-dice.herokuapp.com/uploads/small_Heavy_b93fa6f364.jpeg' })
-//         //ctx.reply(JSON.parse(data));
-//     });
-  
-//     }).on("error", (err) => {
-//         ctx.reply(' unlucky vez ');
-//   console.log("Error: " + err.message);
-//     });
-    
-})
-
-
-bot.command('airc', ctx => {
-    console.log(ctx.from)
-    ctx.replyWithDice();
-    var route = "dice/airc/roll"
-//   
-
+const regex = new RegExp(/roll (.+)/i)
+bot.hears(regex, (ctx) => { 
+    var name = ctx.update.message.text
+    name = name.substr ( name.indexOf('roll ') );
+    name = name.replace('roll ', '');
+    if( name.indexOf(' ') != -1 ){
+        name = name.substr ( 0, name.indexOf(' ') );
+    }
+    const route = "dice/"+ name +"/roll"
     https.get(site + route, (resp) => {
-    let data = '';
+        let data = '';
+        // A chunk of data has been received.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
 
-    // A chunk of data has been received.
-    resp.on('data', (chunk) => {
-        data += chunk;
-    });
-
-    // The whole response has been received. Print out the result.
-    resp.on('end', () => {
-       var obj = JSON.parse(data);
-        console.log(obj.image.formats.small.url);
-        var imageUrl = new URL(obj.image.formats.small.url, site).href 
-        
-        ctx.replyWithPhoto({ url: imageUrl })
-      //  ctx.reply(imageUrl);
-    });
-  
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+            var obj = JSON.parse(data);
+                if( Object.keys(obj).length > 0 ){
+                    var imageUrl = new URL(obj.image.formats.small.url, site).href 
+                    ctx.replyWithDice();
+                    setTimeout(() => {  ctx.replyWithPhoto({ url: imageUrl }) }, 1600);
+                }
+            } catch (e) {
+                return false;
+            }
+        });
     }).on("error", (err) => {
-        ctx.reply(' unlucky vez ');
         console.log("Error: " + err.message);
     });
-    
-})
+});
 
-bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 
-//method to start get the script to pulling updates for telegram 
 
-//bot.launch();
 module.exports = bot
