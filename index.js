@@ -1,11 +1,14 @@
 const { Composer } = require('micro-bot');
 const fs = require('fs')
 const bot = new Composer()
-
+const site = "https://cf-dice.herokuapp.com/"
+const https = require('https');
 //method for invoking start command
  
 bot.command('start', ctx => {
      console.log(ctx.from)
+   
+     
      ctx.reply('start vez');
 //     const https = require('https');
 
@@ -36,28 +39,30 @@ bot.command('start', ctx => {
 bot.command('airc', ctx => {
     console.log(ctx.from)
     ctx.reply('airc vez');
-//     const https = require('https');
+    var route = "dice/airc/roll"
+//   
 
-//     https.get('https://cf-dice.herokuapp.com/dice/airc/roll', (resp) => {
-//     let data = '';
+    https.get(site + route, (resp) => {
+    let data = '';
 
-//     // A chunk of data has been received.
-//     resp.on('data', (chunk) => {
-//         data += chunk;
-//     });
+    // A chunk of data has been received.
+    resp.on('data', (chunk) => {
+        data += chunk;
+    });
 
-//     // The whole response has been received. Print out the result.
-//     resp.on('end', () => {
-//         console.log(JSON.parse(data).explanation);
-//         console.log(data);
-//         ctx.replyWithPhoto({ url: 'https://cf-dice.herokuapp.com/uploads/small_Heavy_b93fa6f364.jpeg' })
-//         //ctx.reply(JSON.parse(data));
-//     });
+    // The whole response has been received. Print out the result.
+    resp.on('end', () => {
+       var obj = JSON.parse(data);
+        console.log(obj.image.formats.small.url);
+        var imageUrl = new URL(obj.image.formats.small.url, site).href 
+        ctx.replyWithPhoto({ url: imageUrl })
+        ctx.reply(imageUrl);
+    });
   
-//     }).on("error", (err) => {
-//         ctx.reply(' unlucky vez ');
-//   console.log("Error: " + err.message);
-//     });
+    }).on("error", (err) => {
+        ctx.reply(' unlucky vez ');
+  console.log("Error: " + err.message);
+    });
     
 })
 
