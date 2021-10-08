@@ -38,7 +38,7 @@ bot.command('start', ctx => {
 
 bot.command('airc', ctx => {
     console.log(ctx.from)
-    
+    ctx.replyWithDice();
     var route = "dice/airc/roll"
 //   
 
@@ -55,8 +55,7 @@ bot.command('airc', ctx => {
        var obj = JSON.parse(data);
         console.log(obj.image.formats.small.url);
         var imageUrl = new URL(obj.image.formats.small.url, site).href 
-        ctx.replyWithDice();
-        await sleep(1500);
+        
         ctx.replyWithPhoto({ url: imageUrl })
       //  ctx.reply(imageUrl);
     });
