@@ -6,7 +6,7 @@ const https = require('https');
 //method for invoking start command
 const regex = new RegExp(/roll (.+)/i)
 bot.hears(regex, (ctx) => { 
-    var name = ctx.update.message.text
+    var name = ctx.update.message.text.toLowerCase();
     name = name.substr ( name.indexOf('roll ') );
     name = name.replace('roll ', '');
     if( name.indexOf(' ') != -1 ){
@@ -19,7 +19,6 @@ bot.hears(regex, (ctx) => {
         resp.on('data', (chunk) => {
             data += chunk;
         });
-
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
             try {
