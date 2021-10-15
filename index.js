@@ -25,7 +25,7 @@ bot.hears(regex, (ctx) => {
             var obj = JSON.parse(data);
                 if( Object.keys(obj).length > 0 ){
                     var imageUrl = new URL(obj.image.formats.small.url, site).href 
-                    
+                    ctx.replyWithDice();
                     setTimeout(() => {  ctx.replyWithPhoto({ url: imageUrl }) }, 1600);
                 }
             } catch (e) {
