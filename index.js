@@ -29,7 +29,7 @@ bot.hears(regex, (ctx) => {
                     setTimeout(() => {  ctx.replyWithPhoto({ url: imageUrl }) }, 1600);
                 }
             } catch (e) {
-                return false;
+                ctx.reply(obj.result)
             }
         });
     }).on("error", (err) => {
